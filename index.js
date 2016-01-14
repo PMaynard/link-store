@@ -20,6 +20,11 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 db_urls.ensureIndex({ fieldName: 'url',  unique: true }, function() {});
 
 app.post('/', upload.array(), function(req, res, next) {
+	if(!req.body.url){
+		util.log("Bad POST Request: ", req.body);
+		res.send('Bad POST Request.');
+		return
+	}
 	util.log(req.body.url);
 	db_urls.insert({url : req.body.url}, function(err, db_res) {
 		if(!err){
