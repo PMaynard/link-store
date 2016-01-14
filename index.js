@@ -23,7 +23,7 @@ function errorHandler(err, req, res, next) {
 	util.log("ERROR: ", err.message);
 	console.log(err);
 	res.status(500);
-	res.send('Error');
+	res.send('Error\n\r');
 }
 
 
@@ -32,11 +32,11 @@ db_urls.ensureIndex({ fieldName: 'url',  unique: true }, function() {});
 app.post('/', upload.array(), function(req, res, next) {
 	if(!req.body.url){
 		util.log("Bad POST Request: ", req.body);
-		res.send('Bad POST Request.');
+		res.send('Bad POST Request.\n\r');
 		return
 	}else if(!validUrl.isWebUri(req.body.url)){
 		util.log("Not a web URI: ", req.body.url);
-		res.send('Not a web URI.');
+		res.send('Not a web URI.\n\r');
 		return
 	}
 	util.log(req.body.url);
@@ -44,10 +44,10 @@ app.post('/', upload.array(), function(req, res, next) {
 		if(!err){
 			res.send('Thanks.');
 		}else if(err && err.errorType === 'uniqueViolated'){
-			res.send('This URL is already in our store.');
+			res.send('This URL is already in our store.\n\r');
 		}else{
 			util.log(err.message)
-			res.send('Something Borked.');
+			res.send('Something Borked.\n\r');
 		}
 	});
 });
