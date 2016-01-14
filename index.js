@@ -14,8 +14,17 @@ var upload = multer();
 var app = express();
 
 app.use(helmet());
-app.use(bodyParser.json()); // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); 
+app.use(errorHandler);
+
+function errorHandler(err, req, res, next) {
+	util.log("ERROR: ", err.message);
+	console.log(err);
+	res.status(500);
+	res.send('Error');
+}
+
 
 db_urls.ensureIndex({ fieldName: 'url',  unique: true }, function() {});
 
