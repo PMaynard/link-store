@@ -7,7 +7,8 @@ var db_urls = new Datastore({ filename: 'data/db_urls', autoload: true, timestam
 var util = require("util");
 var express = require("express")
 var bodyParser = require('body-parser');
-var multer = require('multer'); // v1.0.5
+var multer = require('multer');
+var qs = require('querystring');
 var upload = multer();
 var app = express();
 
@@ -18,7 +19,7 @@ db_urls.ensureIndex({ fieldName: 'url',  unique: true }, function() {});
 
 app.post('/', upload.array(), function(req, res, next) {
 	util.log(req.body.url);
-	db_urls.insert({url : req.body.url}, function(err, db_res) {
+	db_urls.insert({url : qs.escape(req.body.url)}, function(err, db_res) {
 		if(!err){
 			res.send('Thanks.');
 		}else if(err && err.errorType === 'uniqueViolated'){
@@ -34,7 +35,7 @@ app.get('/', function (req, res) {
 	db_urls.find().sort({ createdAt: -1 }).exec( function (err, docs) {
 		var html = "<pre>";
 		for(var i in docs){
-			html += docs[i].createdAt + " - " + docs[i].url + "\n\r";
+			html += docs[i].createdAt + " - " + JSON.stringify(qs.parse(docs[i].url)) + "\n\r";
 		}
 		html += "</pre>"
 		res.send(html);
