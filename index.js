@@ -53,7 +53,7 @@ app.post('/', upload.array(), function(req, res, next) {
 });
 
 app.get('/', function (req, res) {
-	db_urls.find().sort({ createdAt: -1 }).exec( function (err, docs) {
+	db_urls.find().sort({ createdAt: -1 }).limit(100).exec( function (err, docs) {
 		var html = "";
 		for(var i in docs){
 			html += "<p>" + docs[i].createdAt + " - <a href=\"" + xssFilters.inHTMLData(docs[i].url) + "\">" + xssFilters.inHTMLData(docs[i].url) + "</a></p>";
