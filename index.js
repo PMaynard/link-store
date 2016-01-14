@@ -10,6 +10,7 @@ var bodyParser = require('body-parser');
 var multer = require('multer');
 var helmet = require('helmet');
 var xssFilters = require('xss-filters');
+var validUrl = require('valid-url');
 var upload = multer();
 var app = express();
 
@@ -33,6 +34,10 @@ app.post('/', upload.array(), function(req, res, next) {
 		util.log("Bad POST Request: ", req.body);
 		res.send('Bad POST Request.');
 		return
+	}else if(!validUrl.isWebUri(req.body.url)){
+		util.log("Not a web URI: ", req.body.url);
+		res.send('Not a web URI.');
+		return
 	}
 	util.log(req.body.url);
 	db_urls.insert({url : req.body.url}, function(err, db_res) {
@@ -49,11 +54,10 @@ app.post('/', upload.array(), function(req, res, next) {
 
 app.get('/', function (req, res) {
 	db_urls.find().sort({ createdAt: -1 }).exec( function (err, docs) {
-		var html = "<pre>";
+		var html = "";
 		for(var i in docs){
-			html += docs[i].createdAt + " - " + xssFilters.inHTMLData(docs[i].url) + "\n\r";
+			html += "<p>" + docs[i].createdAt + " - <a href=\"" + xssFilters.inHTMLData(docs[i].url) + "\">" + xssFilters.inHTMLData(docs[i].url) + "</a></p>";
 		}
-		html += "</pre>"
 		res.send(html);
 	});	
 });
