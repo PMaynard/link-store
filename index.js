@@ -42,7 +42,7 @@ app.post('/', upload.array(), function(req, res, next) {
 	util.log(req.body.url);
 	db_urls.insert({url : req.body.url}, function(err, db_res) {
 		if(!err){
-			res.send('Thanks.');
+			res.send('Thanks.\n\r');
 		}else if(err && err.errorType === 'uniqueViolated'){
 			res.send('This URL is already in our store.\n\r');
 		}else{
