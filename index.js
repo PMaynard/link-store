@@ -19,6 +19,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); 
 app.use(errorHandler);
 
+app.set('trust proxy', 'loopback');
+
 function errorHandler(err, req, res, next) {
 	util.log("ERROR: ", err.message);
 	console.log(err);
@@ -53,6 +55,7 @@ app.post('/', upload.array(), function(req, res, next) {
 });
 
 app.get('/', function (req, res) {
+	util.log(req.ips + " - " + res.get('User-Agent') + " [/]");
 	db_urls.find().sort({ createdAt: -1 }).limit(100).exec( function (err, docs) {
 		var html = "";
 		for(var i in docs){
