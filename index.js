@@ -31,7 +31,7 @@ function errorHandler(err, req, res, next) {
 
 db_urls.ensureIndex({ fieldName: 'url',  unique: true }, function() {});
 
-app.post('/', upload.array(), function(req, res, next) {
+app.post('/links', upload.array(), function(req, res, next) {
 	if(!req.body.url){
 		util.log("Bad POST Request: ", req.body);
 		res.send('Bad POST Request.\n\r');
@@ -54,7 +54,7 @@ app.post('/', upload.array(), function(req, res, next) {
 	});
 });
 
-app.get('/', function (req, res) {
+app.get('/links', function (req, res) {
 	util.log(req.ips + " - " + res.get('User-Agent') + " [/]");
 	db_urls.find().sort({ createdAt: -1 }).exec( function (err, docs) {
 		var html = "";
