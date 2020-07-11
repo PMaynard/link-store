@@ -1,4 +1,4 @@
-# link-store
+# Link Store 
 A Place To Store Links
 
     curl -F 'url=https://duckduckgo.com/' https://port22.co.uk/links
@@ -16,32 +16,32 @@ Now you can add links by running:
 
     plink https://matrix.ac
 
-# Bookmarklet
+# Build
 
-	(function(){
-	  var post_to_url = function(path, params, method) {
-	    var openWindow = window.open(path);
-	    method = method || "post"; 
-	    var form = openWindow.document.createElement("form");
-	    form.setAttribute("method", method);
-	    form.setAttribute("action", path);
-	    for(var key in params) {
-		var hiddenField = document.createElement("input");
-		hiddenField.setAttribute("type", "hidden");
-		hiddenField.setAttribute("name", key);
-		hiddenField.setAttribute("value", params[key]);
-		form.appendChild(hiddenField);
-	    }
-	    openWindow.document.body.appendChild(form);
-	    form.submit();
-	  };
-	post_to_url(
-	  'https://port22.co.uk/links', 
-	  {url: window.location.href });
-	})()
+``
+meson clang kcgi 
+``
 
-URL
+# License
 
-	javascript:(function(){var%20post_to_url=function(path,params,method){var%20openWindow=window.open(path);method=method||"post";var%20form=openWindow.document.createElement("form");form.setAttribute("method",method);form.setAttribute("action",path);for(var%20key%20in%20params){var%20hiddenField=document.createElement("input");hiddenField.setAttribute("type","hidden");hiddenField.setAttribute("name",key);hiddenField.setAttribute("value",params[key]);form.appendChild(hiddenField);}openWindow.document.body.appendChild(form);form.submit();};post_to_url('https://port22.co.uk/links',{url:window.location.href});})()
+The MIT License (MIT)
 
-Click [here](javascript:(function(){var%20post_to_url=function(path,params,method){var%20openWindow=window.open(path);method=method||"post";var%20form=openWindow.document.createElement("form");form.setAttribute("method",method);form.setAttribute("action",path);for(var%20key%20in%20params){var%20hiddenField=document.createElement("input");hiddenField.setAttribute("type","hidden");hiddenField.setAttribute("name",key);hiddenField.setAttribute("value",params[key]);form.appendChild(hiddenField);}openWindow.document.body.appendChild(form);form.submit();};post_to_url('https://port22.co.uk/links',{url:window.location.href});})())
+Copyright (c) 2016 Pete Maynard
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
